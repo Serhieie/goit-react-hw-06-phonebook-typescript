@@ -1,5 +1,34 @@
-const windowWidth = window.innerWidth;
-const settings = {
+const windowWidth: number = window.innerWidth;
+
+interface Settings {
+  overlay: {
+    position: string,
+    zIndex: number,
+    top: number,
+    left: number,
+    right: number,
+    bottom: number,
+    backgroundColor: string,
+  };
+  content: {
+    position: string,
+    top: string,
+    left: string,
+    right: string,
+    bottom: string,
+    marginRight: string,
+    transform: string,
+    border: string,
+    background: string,
+    overflow: string,
+    WebkitOverflowScrolling: string,
+    borderRadius: string,
+    outline: string,
+    padding: string,
+  };
+}
+
+const settings: Settings = {
   overlay: {
     position: 'fixed',
     zIndex: 999,

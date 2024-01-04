@@ -1,4 +1,4 @@
-export default function normalizePhoneNumber(value) {
+export default function normalizePhoneNumber(value: string): string {
   const cleaned = value.replace(/\D/g, '');
 
   const patterns = [

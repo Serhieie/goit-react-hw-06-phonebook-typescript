@@ -2,13 +2,13 @@ import { LiaUserEditSolid } from 'react-icons/lia';
 import { FiPhoneMissed } from 'react-icons/fi';
 import { Field } from 'formik';
 
-export function Input() {
+export const Input: React.FC = () => {
   return (
     <>
       <label
         htmlFor="name"
         className="mt-10 text-xl flex items-center gap-2 md:ml-2 md:w-10/12
-      md2:text-sm font-medium sm:mt-3"
+      md2:text-sm font-medium"
       >
         <LiaUserEditSolid className="ml-3 md:ml-6" />
         Name
@@ -26,7 +26,7 @@ export function Input() {
       <label
         htmlFor="number"
         className="mt-6 text-xl flex items-center gap-2 md:ml-2 md:w-10/12
-      md:text-4 font-medium md2:text-xs md2:mt-1 sm:mt-2"
+      md:text-4 md2:text-sm font-medium"
       >
         <FiPhoneMissed className="ml-3 md:ml-6 w-[14px] h-[14px]" />
         Phone Number
@@ -43,4 +43,4 @@ export function Input() {
       />
     </>
   );
-}
+};

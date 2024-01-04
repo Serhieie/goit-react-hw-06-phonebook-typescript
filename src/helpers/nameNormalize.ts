@@ -1,4 +1,4 @@
-export default function normalizeName(value) {
+export default function normalizeName(value: string): string {
   const splited = value
     .split(' ')
     .map(value =>

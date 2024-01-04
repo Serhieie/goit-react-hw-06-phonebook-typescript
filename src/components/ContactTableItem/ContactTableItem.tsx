@@ -1,15 +1,20 @@
-import { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import normalizePhoneNumber from '../../helpers/numberNormalize';
 import { AiOutlineUserDelete } from 'react-icons/ai';
-import Modal from 'react-modal';
-import { settings } from 'helpers/deleteModalSettings';
+import Modal, { Styles } from 'react-modal';
+import { settings } from '../../helpers/deleteModalSettings';
+import { ContactTableItemProps } from './ContactTableItem.types';
 
 Modal.setAppElement('#root');
 
-export function ContactTableItem({ contact, index, onDeleteContact }) {
+export const ContactTableItem: React.FC<ContactTableItemProps> = ({
+  contact,
+  index,
+  onDeleteContact,
+}) => {
   const windowWidth = window.innerWidth;
   const [modalIsOpen, setIsOpen] = useState(false);
-  const subtitle = useRef();
+  const subtitle = useRef<HTMLHeadingElement>(null);
 
   const openModal = () => {
     setIsOpen(true);
@@ -62,7 +67,7 @@ export function ContactTableItem({ contact, index, onDeleteContact }) {
         </button>
       </td>
       <Modal
-        style={settings}
+        style={settings as Styles}
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Delete Confirmation"
@@ -102,4 +107,4 @@ export function ContactTableItem({ contact, index, onDeleteContact }) {
       </Modal>
     </tr>
   );
-}
+};

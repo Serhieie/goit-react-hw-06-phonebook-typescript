@@ -1,31 +1,39 @@
-import PropTypes from 'prop-types';
+import React from 'react';
 import { Formik, Form } from 'formik';
-import { schema } from 'constants';
+import { schema } from '../../constants/schema';
 import { succesMessage, nameCheckerError } from '../../helpers/notiflix';
 import { Input } from '../ContactFormInput/ContactFormInput';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import normalizePhoneNumber from '../../helpers/numberNormalize';
-import normalizeName from 'helpers/nameNormalize';
+import normalizeName from '../../helpers/nameNormalize';
 import { ErrorMessage } from 'formik';
 import { useSelector } from 'react-redux';
 import { getContacts } from '../../redux/contactsSlice';
+
+interface ContactFormProps {
+  onSubmit: (name: string, number: string) => void;
+}
 
 const initialValues = {
   name: '',
   number: '',
 };
 
-export function ContactForm({ onSubmit }) {
+export const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
   const contacts = useSelector(getContacts);
 
-  const handleSubmit = (values, { resetForm }) => {
+  const handleSubmit = (
+    values: { name: string; number: string },
+    { resetForm }: { resetForm: () => void }
+  ) => {
     const { name, number } = values;
 
     let someNum = normalizePhoneNumber(number);
     let normName = normalizeName(name);
 
     const isNameExists = contacts.some(
-      contact => contact.name.toLowerCase() === normName.toLowerCase()
+      (contact: { name: string; number: string }) =>
+        contact.name.toLowerCase() === normName.toLowerCase()
     );
 
     if (isNameExists) {
@@ -82,8 +90,4 @@ export function ContactForm({ onSubmit }) {
       </Form>
     </Formik>
   );
-}
-
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func,
 };

@@ -1,13 +1,12 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeFilterValue, getFilterValue } from '../../redux/filterSlice';
 
-export function Filter() {
+export const Filter: React.FC = () => {
   const dispatch = useDispatch();
-  const filterValue = useSelector(getFilterValue);
+  const filterValue: string = useSelector(getFilterValue);
 
-  const handleInputChange = event => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     dispatch(changeFilterValue(value));
   };
@@ -23,9 +22,4 @@ export function Filter() {
       />
     </label>
   );
-}
-
-Filter.propTypes = {
-  value: PropTypes.string,
-  onChange: PropTypes.func,
 };
