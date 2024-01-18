@@ -4,14 +4,16 @@ import { AiOutlineUserDelete } from 'react-icons/ai';
 import Modal, { Styles } from 'react-modal';
 import { settings } from '../../helpers/deleteModalSettings';
 import { ContactTableItemProps } from './ContactTableItem.types';
+import { deleteContact } from '../../redux/contactsSlice';
+import { useDispatch } from 'react-redux';
 
 Modal.setAppElement('#root');
 
 export const ContactTableItem: React.FC<ContactTableItemProps> = ({
   contact,
   index,
-  onDeleteContact,
 }) => {
+  const dispatch = useDispatch();
   const windowWidth = window.innerWidth;
   const [modalIsOpen, setIsOpen] = useState(false);
   const subtitle = useRef<HTMLHeadingElement>(null);
@@ -24,8 +26,12 @@ export const ContactTableItem: React.FC<ContactTableItemProps> = ({
     setIsOpen(false);
   };
 
+  const handleDeleteContact = (contactId: string) => {
+    dispatch(deleteContact(contactId));
+  };
+
   const handleDelete = () => {
-    onDeleteContact(contact.id);
+    handleDeleteContact(contact.id);
     closeModal();
   };
 

@@ -7,19 +7,17 @@ import { AiOutlineUserAdd } from 'react-icons/ai';
 import normalizePhoneNumber from '../../helpers/numberNormalize';
 import normalizeName from '../../helpers/nameNormalize';
 import { ErrorMessage } from 'formik';
-import { useSelector } from 'react-redux';
-import { getContacts } from '../../redux/contactsSlice';
-
-interface ContactFormProps {
-  onSubmit: (name: string, number: string) => void;
-}
+import { useSelector, useDispatch } from 'react-redux';
+import { getContacts, addContact } from '../../redux/contactsSlice';
+import { nanoid } from '@reduxjs/toolkit';
 
 const initialValues = {
   name: '',
   number: '',
 };
 
-export const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
+export const ContactForm: React.FC = () => {
+  const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
 
   const handleSubmit = (
@@ -39,9 +37,19 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
     if (isNameExists) {
       return nameCheckerError();
     }
-    onSubmit(normName, someNum);
+    handleAddContact(normName, someNum);
     succesMessage();
     resetForm();
+  };
+
+  const handleAddContact = (name: string, number: string) => {
+    dispatch(
+      addContact({
+        id: nanoid().toString(),
+        name,
+        number: normalizePhoneNumber(number),
+      })
+    );
   };
 
   return (

@@ -7,5 +7,4 @@ interface Contact {
 export interface ContactTableItemProps {
   contact: Contact;
   index: number;
-  onDeleteContact: (id: string) => void;
 }

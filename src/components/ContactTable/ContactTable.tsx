@@ -1,10 +1,21 @@
 import { ContactTableItem } from '../ContactTableItem/ContactTableItem';
-import { ContactTableProps } from './ContactTable.types';
+import { getContacts, Contact } from '../../redux/contactsSlice';
+import { getFilterValue } from '../../redux/filterSlice';
+import { useSelector } from 'react-redux';
 
-export const ContactTable: React.FC<ContactTableProps> = ({
-  getVisibleContacts,
-  onDeleteContact,
-}) => {
+export const ContactTable: React.FC = () => {
+  const contacts: Contact[] = useSelector(getContacts);
+  const filter: string = useSelector(getFilterValue);
+
+  const getVisibleContacts = (): Contact[] => {
+    const normalizedFilter = filter.toLowerCase();
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedFilter)
+    );
+  };
+
+  const visibleContacts: Contact[] = getVisibleContacts();
+
   return (
     <div className="overflow-x-auto md:w-full">
       <table
@@ -41,12 +52,11 @@ export const ContactTable: React.FC<ContactTableProps> = ({
           </tr>
         </thead>
         <tbody className="max-h-fit max-w-full text-lg">
-          {getVisibleContacts.map((contact, index) => (
+          {visibleContacts.map((contact, index) => (
             <ContactTableItem
               key={contact.id}
               contact={contact}
               index={index}
-              onDeleteContact={onDeleteContact}
             />
           ))}
         </tbody>
